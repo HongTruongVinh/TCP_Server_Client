@@ -1,0 +1,11 @@
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\bin\Debug\TCP_Yinyang.exe.config
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\bin\Debug\TCP_Yinyang.exe
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\bin\Debug\TCP_Yinyang.pdb
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\Server.csproj.AssemblyReference.cache
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\Server.csproj.SuggestedBindingRedirects.cache
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\TCP_Yinyang.Properties.Resources.resources
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\TCP_Yinyang.Server.resources
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\Server.csproj.GenerateResource.cache
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\TCP_Yinyang.exe
+C:\Users\HONG VINH\source\repos\TCP_Yinyang\TCP_Yinyang\obj\Debug\TCP_Yinyang.pdb
