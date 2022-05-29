@@ -51,7 +51,7 @@ namespace Client
         void NewWay()
         {
 
-            byte[] data = ClientThread.Instance.GetDataFromCommand("GetDataTable");
+            byte[] data = TCPClient.Instance.GetDataFromCommand("GetDataTable");
             try
             {
                 DataTable dt = (DataTable)DeserializeData(data);
@@ -62,7 +62,7 @@ namespace Client
 
             }
 
-            data = ClientThread.Instance.GetDataFromCommand("GetMyUsername");
+            data = TCPClient.Instance.GetDataFromCommand("GetMyUsername");
             string messageFromServer = Encoding.UTF8.GetString(data);
 
             //thử ép kiểu data nhận về là string

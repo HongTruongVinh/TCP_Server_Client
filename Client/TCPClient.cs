@@ -10,25 +10,24 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public class ClientThread
+    public class TCPClient
     {
         #region make singleton
-        private static ClientThread instance;
-        public static ClientThread Instance
+        private static TCPClient instance;
+        public static TCPClient Instance
         {
             get
             {
-                if (instance == null) instance = new ClientThread(); return instance;
+                if (instance == null) instance = new TCPClient(); return instance;
             }
             private set { instance = value; }
         }
 
-        private ClientThread() { }
+        private TCPClient() { }
         #endregion
 
         TcpClient tcpCLient;
         Socket socketClient;
-        string data;
         const int SERVERPORT = 8080;
         Thread clientThread;
         bool stopTcpCient = true;
@@ -37,10 +36,10 @@ namespace Client
         public string username;
         public string password;
 
-        public bool Logined()
+        public bool Login(string _username, string _password)
         {
-            username = "Admin";
-            password = "123";
+            username = _username;
+            password = _password;
 
             try
             {
@@ -139,6 +138,28 @@ namespace Client
 
 
             return dataGet;
+        }
+
+        public void TCPCLientStop()
+        {
+            byte[] dataGet = new byte[1024 * 5000];
+
+            IPEndPoint newiPEndPoint = new IPEndPoint(newserverIP, SERVERPORT + 1);
+            newtcpCLient = new TcpClient();
+            newtcpCLient.Connect(newiPEndPoint);// Mở kết nối tới server 
+            Socket newclientSocket = newtcpCLient.Client;
+
+            byte[] dataSend = Encoding.ASCII.GetBytes("EXIT");
+            newclientSocket.Send(dataSend);//Gui
+
+            newclientSocket.Receive(dataGet);//Nhan
+
+            newclientSocket.Close();
+            newtcpCLient.Close();
+
+            stopTcpCient = true;
+            tcpCLient.Close();
+            clientThread.Abort();
         }
     }
 }

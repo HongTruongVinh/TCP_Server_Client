@@ -40,11 +40,6 @@ namespace TCP_Yinyang
             serverThread.Start();
         }
 
-        public void TCPServerStop()
-        {
-            
-        }
-
         private void Listen()
         {
             try
@@ -145,7 +140,10 @@ namespace TCP_Yinyang
                         case "MainWindow":
 
                             break;
-                        case "Exit":
+                        case "EXIT":
+                            newSocket.Close();
+                            tcpClient1.Close();
+
                             tcpClientDictionary.Remove(username);
                             Thread threadBeKill = threadDictionary[username];
                             threadDictionary.Remove(username);
@@ -161,18 +159,20 @@ namespace TCP_Yinyang
             }
         }
 
-        private void Stop(string username)
+        public void TCPServerStop()
         {
-            //foreach (var item in collection)
-            //{
+            foreach (var item in tcpClientDictionary)
+            {
+                tcpClientDictionary.Remove(item.Key);
+                Thread threadBeKill = threadDictionary[item.Key];
+                threadDictionary.Remove(item.Key);
+                threadBeKill.Abort();
+            }
+            isServerOpen = false;
+            tcpListener.Stop();
+            
+            serverThread.Abort();
 
-            //}
-
-            //tcpClientDictionary.Remove(username);
-            //Thread threadBeKill = threadDictionary[username];
-            //threadDictionary.Remove(username);
-            //threadBeKill.Abort();
-            //clientConnecting = false;
         }
     }
 }

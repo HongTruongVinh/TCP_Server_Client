@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_Pass = new System.Windows.Forms.TextBox();
             this.btn_Login = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_User = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -42,12 +44,12 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Password";
             // 
-            // textBox1
+            // tb_Pass
             // 
-            this.textBox1.Location = new System.Drawing.Point(85, 76);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 22);
-            this.textBox1.TabIndex = 6;
+            this.tb_Pass.Location = new System.Drawing.Point(85, 76);
+            this.tb_Pass.Name = "tb_Pass";
+            this.tb_Pass.Size = new System.Drawing.Size(241, 22);
+            this.tb_Pass.TabIndex = 6;
             // 
             // btn_Login
             // 
@@ -59,13 +61,31 @@
             this.btn_Login.UseVisualStyleBackColor = true;
             this.btn_Login.Click += new System.EventHandler(this.btn_Login_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 16);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Username";
+            // 
+            // tb_User
+            // 
+            this.tb_User.Location = new System.Drawing.Point(88, 48);
+            this.tb_User.Name = "tb_User";
+            this.tb_User.Size = new System.Drawing.Size(241, 22);
+            this.tb_User.TabIndex = 8;
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.tb_User);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_Pass);
             this.Controls.Add(this.btn_Login);
             this.Name = "Client";
             this.Text = "Client";
@@ -77,8 +97,10 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_Pass;
         private System.Windows.Forms.Button btn_Login;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tb_User;
     }
 }
 
