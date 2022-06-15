@@ -10,20 +10,20 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public class TCPClient
+    public class TCPClientV2
     {
         #region make singleton
-        private static TCPClient instance;
-        public static TCPClient Instance
+        private static TCPClientV2 instance;
+        public static TCPClientV2 Instance
         {
             get
             {
-                if (instance == null) instance = new TCPClient(); return instance;
+                if (instance == null) instance = new TCPClientV2(); return instance;
             }
             private set { instance = value; }
         }
 
-        private TCPClient() { }
+        private TCPClientV2() { }
         #endregion
 
         TcpClient tcpCLient;
@@ -72,15 +72,15 @@ namespace Client
                     
                     stopTcpCient = false;
 
-                    clientThread = new Thread(ClientReceive);
-                    clientThread.Start();
+                    //clientThread = new Thread(ClientReceive);
+                    //clientThread.Start();
 
                     return true;
                 }
                 else
                 {
-                    tcpCLient.Close();
-                    socketClient.Close();
+                    //tcpCLient.Close();
+                    //socketClient.Close();
 
                     return false;
                 }
@@ -93,16 +93,16 @@ namespace Client
 
         void ClientReceive()
         {
-            dataFromServer = new byte[1024 * 5000];
+            //dataFromServer = new byte[1024 * 5000];
             socketClient = tcpCLient.Client;
+
+            byte[] data = new byte[1024 * 5000];
 
             while (/*tcpCLient.Connected &&*/ !stopTcpCient && clientThread.IsAlive == true)
             {
                 Application.DoEvents();
                 try
                 {
-
-                    byte[] data = new byte[1024 * 5000];
                     socketClient.Receive(data);
                     dataFromServer = data;
 
@@ -113,9 +113,22 @@ namespace Client
                 }
             }
 
-            socketClient.Close();
-            tcpCLient.Close();
-            clientThread.Abort();
+            //socketClient.Close();
+            //tcpCLient.Close();
+            //clientThread.Abort();
+        }
+
+        public byte[] SendMessage(string command)
+        {
+            byte[] bytecommand = Encoding.ASCII.GetBytes(command);
+
+            byte[] dataReturn = new byte[1024 * 5000];
+
+            socketClient.Send(bytecommand);
+
+            socketClient.Receive(dataReturn);
+
+            return dataReturn;
         }
 
         TcpClient newtcpCLient;

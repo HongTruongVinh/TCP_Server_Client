@@ -75,7 +75,7 @@ namespace TCP_Yinyang
             dt.Columns.Add(new DataColumn("DateTimeValue", typeof(DateTime)));
             dt.Columns.Add(new DataColumn("BooleanValue", typeof(bool)));
 
-            for (int i = 1; i <= 1000; i++)
+            for (int i = 1; i <= 100; i++)
             {
                 dr = dt.NewRow();
                 dr[0] = i;

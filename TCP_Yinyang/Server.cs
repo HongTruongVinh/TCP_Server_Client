@@ -25,21 +25,25 @@ namespace TCP_Yinyang
         }
         void Load()
         {
+            btn_Open.Enabled = false;
+
             this.FormClosing += Server_FormClosing;
+
+            TCPServerV2.Instance.TCPServerStart();
         }
 
         bool isServerOpen = false;
 
         private void btn_Open_Click(object sender, EventArgs e)
         {
-
+            return;
             if(isServerOpen == false)
             {
                 btn_Open.Enabled = false;
                 isServerOpen = true;
                 btn_Open.Text = "Listening ...";
 
-                TCPServer.Instance.TCPServerStart();
+                TCPServerV2.Instance.TCPServerStart();
             }
             
 
@@ -51,7 +55,7 @@ namespace TCP_Yinyang
                 DialogResult result = MessageBox.Show("Do you really want to exit?", "Dialog Title", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    TCPServer.Instance.TCPServerStop();
+                    TCPServerV2.Instance.TCPServerStop();
 
                     Environment.Exit(0);
                 }

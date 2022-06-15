@@ -9,27 +9,26 @@ using System.Threading.Tasks;
 
 namespace TCP_Yinyang
 {
-    public class TCPServer
+    public class TCPServerV2
     {
         #region make singleton
-        private static TCPServer instance;
-        public static TCPServer Instance
+        private static TCPServerV2 instance;
+        public static TCPServerV2 Instance
         {
             get
             {
-                if (instance == null) instance = new TCPServer(); return instance;
+                if (instance == null) instance = new TCPServerV2(); return instance;
             }
             private set { instance = value; }
         }
 
-        private TCPServer() { }
+        private TCPServerV2() { }
         #endregion
 
         Thread serverThread;
         TcpListener tcpListener;
         bool isServerOpen = false;
         int SERVERPORT = 8080;
-        int SERVERPORT_SendData = 8079;
         Dictionary<string, TcpClient> tcpClientDictionary = new Dictionary<string, TcpClient>();// lưu những tcp đc tạo ra mỗi khi có 1 client đăng nhập
 
         Dictionary<string, Thread> threadDictionary = new Dictionary<string, Thread>();// lưu những thread đc tạo ra mỗi khi có 1 client đăng nhập
@@ -69,10 +68,10 @@ namespace TCP_Yinyang
 
 
                         //Tao 1 thread moi để phục vụ user này 
-                        Thread clientThread = new Thread(() => CommandFromClient(usernameAndpassword[0]));
-                        tcpClientDictionary.Add(usernameAndpassword[0], _tcpClient);
-                        clientThread.Name = usernameAndpassword[0];
-                        threadDictionary.Add(usernameAndpassword[0], clientThread);
+                        Thread clientThread = new Thread(() => CommandFromClient(usernameAndpassword[0], _tcpClient));
+                        //tcpClientDictionary.Add(usernameAndpassword[0], _tcpClient);
+                        //clientThread.Name = usernameAndpassword[0];
+                        //threadDictionary.Add(usernameAndpassword[0], clientThread);
                         clientThread.Start();
                     }
                     else
@@ -83,8 +82,8 @@ namespace TCP_Yinyang
                         _socketClient.Send(LogFail);// thong bao toi client dang nhap khong thanh cong
                     }
 
-                    _socketClient.Close();
-                    _tcpClient.Close();
+                    //_socketClient.Close();
+                    //_tcpClient.Close();
 
                     //_socketClient.Dispose();
                     //_socketClient = null;
@@ -101,49 +100,51 @@ namespace TCP_Yinyang
             }
         }
 
-        private void CommandFromClient(string username)
+        private void CommandFromClient(string username, TcpClient tcpClient)
         {
 
             bool clientConnecting = true;
-            
-            TcpListener tcpListener1 = new TcpListener(new System.Net.IPEndPoint(IPAddress.Any, SERVERPORT_SendData)); //SERVERPORT_SendData--;
-            tcpListener1.Start();
+
+            TcpClient tcpClient1 = tcpClient;
+            Socket newSocket = tcpClient1.Client;
+
+            //TcpListener tcpListener1 = new TcpListener(new System.Net.IPEndPoint(IPAddress.Any, SERVERPORT_SendData)); //SERVERPORT_SendData--;
+            //tcpListener1.Start();
 
             while (isServerOpen && clientConnecting)
             {
 
                 try
                 {
-                    TcpClient tcpClient1 = tcpListener1.AcceptTcpClient();
-                    Socket newSocket = tcpClient1.Client;
 
                     byte[] data = new byte[1024 * 5000];
                     newSocket.Receive(data);
 
                     string message = Encoding.UTF8.GetString(data);
-                    string[] msg = message.Split('\0');
+                    string[] msg = message.Split('\0', ' ');
 
 
                     switch (msg[0])
                     {
                         case "GetMyUsername":
                             byte[] dataHello = new byte[1024 * 5000];
-                            dataHello = Encoding.UTF8.GetBytes("Hello " + username);
-
+                            dataHello = Encoding.UTF8.GetBytes("Hello " + msg[1]);
 
                             newSocket.Send(dataHello);
 
-                            newSocket.Close();
-                            tcpClient1.Close();
+                            //newSocket.Close();
+                            //tcpClient1.Close();
 
                             break;
 
                         case "GetDataTable":
+                            byte[] dataTable = new byte[1024 * 5000];
+                            dataTable = FormatData.Instance.SerializeData(FormatData.Instance.getdata());
 
-                            newSocket.Send(FormatData.Instance.SerializeData(FormatData.Instance.getdata()));
-
-                            newSocket.Close();
-                            tcpClient1.Close();
+                            newSocket.Send(dataTable);
+                            
+                            //newSocket.Close();
+                            //tcpClient1.Close();
                             break;
 
                         case "MainWindow":
